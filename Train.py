@@ -77,7 +77,6 @@ for i, m in enumerate(metadata):
 def distance(emb1, emb2):
     return np.sum(np.square(emb1 - emb2))
 
-####################a4
 distances = []  # squared L2 distance between pairs
 identical = []  # 1 if same identity, 0 otherwise
 
@@ -148,6 +147,7 @@ from sklearn.externals import joblib
 
 
 joblib.dump(svc, 'models/svc.pkl')
+joblib.dump(knn, 'models/knn.pkl')
 
 print(svc.predict(X_test))
 print("----")

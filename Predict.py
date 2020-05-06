@@ -1,10 +1,7 @@
-
-
 import os.path
 import gc 
 from sklearn.externals import joblib  # jbolib模組
 from Load_Metadata import load_metadata,normalization,label,distance,recordToCSV,move,copyimg,load_metadata_predict
-    
 
 #set path
 path_database='./images/'
@@ -20,6 +17,7 @@ distance_thresholde=0.5
 
 #load model
 svc = joblib.load('models/svc.pkl')
+knn = joblib.load('models/knn.pkl')
 #set flag
 RecognizeFlag = 1
 
@@ -45,7 +43,7 @@ while 1:
             metadata_recognize_folder = load_metadata_predict(path_recognize)    
             recognize_flag, embedded,i = normalization(metadata_recognize_folder)
 
-            # print("recognize_flag :",recognize_flag)
+
 
             if recognize_flag == 0:
                 print("擷取人臉特徵失敗")
@@ -64,7 +62,7 @@ while 1:
  
         #如果有多種圖要辨識的話
         example_idx = i
-        example_prediction = svc.predict([embedded[example_idx]])
+        example_prediction = knn.predict([embedded[example_idx]])
 
         start_distance=int((len(embedded_metadata_database)/classnum) * (int(example_prediction)))
         End_distance = int((len(embedded_metadata_database)/classnum) * (int(example_prediction)+1))-1

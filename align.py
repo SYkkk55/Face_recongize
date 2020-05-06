@@ -185,4 +185,8 @@ class AlignDlib:
                                    imgDim * MINMAX_TEMPLATE[npLandmarkIndices])
         thumbnail = cv2.warpAffine(rgbImg, H, (imgDim, imgDim))
 
+        # 做不對齊的
+
+        # thumbnail= cv2.resize(rgbImg,(96,96),interpolation=cv2.INTER_CUBIC)
+
         return thumbnail

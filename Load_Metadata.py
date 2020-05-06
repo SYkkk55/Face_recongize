@@ -6,7 +6,7 @@ from model import create_model
 from sklearn.preprocessing import LabelEncoder
 import csv
 import shutil
-import psutil
+
 
 nn4_small2_pretrained = create_model()
 nn4_small2_pretrained.load_weights('models/nn4.small2.v1.h5')
