@@ -55,6 +55,7 @@ alignment = AlignDlib('models/landmarks.dat')
 
 # 這裡會創建 128 是因為預先訓練的模型，架構是 96*96的 input 的全連接層，輸出128個點為特徵值
 #創建零的陣列然後依照image 裡面有幾張圖就創幾個，每一個都是128個零
+print("metadata.shape[0]: ",metadata.shape[0])
 embedded = np.zeros((metadata.shape[0], 128))
 print(" 0: ", embedded.shape)
 
@@ -136,7 +137,7 @@ X_test = embedded[test_idx]
 y_train = y[train_idx]
 y_test = y[test_idx]
 
-knn = KNeighborsClassifier(n_neighbors=1, metric='euclidean')
+knn = KNeighborsClassifier(n_neighbors=5, metric='euclidean')
 svc = LinearSVC()
 
 knn.fit(X_train, y_train)
