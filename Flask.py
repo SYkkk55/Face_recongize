@@ -9,12 +9,14 @@ print("set path--------------------")
 print("set nn4 models---------------------")
 nn4_small2_pretrained = create_model()
 nn4_small2_pretrained.load_weights('models/nn4.small2.v1.h5')
-distance_thresholde = 0.5
+distance_thresholde = 0.3
 
 # Taipei = DatabaseModel('1','./images/Taipei/','models/knn_Taipei.pkl')
 # Tainan = DatabaseModel('2','./images/Tainan/','models/knn_Tainan.pkl')
 
 Taipei = DatabaseModel('1','./images/Taipei/','models/knn_Taipei.pkl')
+Tainan = DatabaseModel('2','./images/Tainan/','models/knn_Tainan.pkl')
+
 print("start")
 #--------------------------------------------
 
@@ -28,13 +30,17 @@ CORS(app, resources=r'/*')
 
 
 
+
 @app.route('/', methods=['GET', 'POST'])
 def root():
 
     # 從 flask request 中讀取圖片（byte str）
     image=request.form['image'].replace(' ', '+')
-    name = request.form.get("name")
-    print(name)
+    filename = request.form.get("filename")
+    type = request.form.get("type")
+
+    print(filename)
+    print("type",type)
 
     # 做 base64 的解碼
     image=base64.b64decode(image)
@@ -51,7 +57,15 @@ def root():
 
     if recognize_flag:
         print("擷取人臉特徵成功,開始辨識")
-        response=predic_Flask(Taipei.model,embedded,Taipei.embedded_metadata_database,Taipei.classnum,distance_thresholde,Taipei.encoder)
+        print(type)
+        if int(type)==1:
+            print("go to type 1")
+            response=predic_Flask(Taipei.model,Taipei.embedded_metadata_database,Taipei.classnum,distance_thresholde,Taipei.encoder,embedded)
+        elif int(type)==2:
+            print("go to type 2")
+            response = predic_Flask(Tainan.model, Tainan.embedded_metadata_database, Tainan.classnum,
+                                    distance_thresholde, Tainan.encoder, embedded)
+
 
     else:
         response = "exception"

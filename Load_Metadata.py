@@ -142,7 +142,7 @@ def img_resize_Flask(img):
     recognize_flag, embedded = normalization_Flask(img_resize)
     return recognize_flag,embedded
 
-def predic_Flask(model,embedded,embedded_metadata_database,classnum,distance_thresholde,encoder):
+def predic_Flask(model,embedded_metadata_database,classnum,distance_thresholde,encoder,embedded):
     # 如果有多種圖要辨識的話
     example_prediction = model.predict([embedded])
 

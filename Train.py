@@ -9,6 +9,10 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import LinearSVC
 
+images_path='images/Taipei'
+knn_model_path='models/knn_Tainan.pkl'
+
+
 
 nn4_small2_pretrained = create_model()
 nn4_small2_pretrained.load_weights('models/nn4.small2.v1.h5')
@@ -47,7 +51,7 @@ def align_image(img):
                            landmarkIndices=AlignDlib.OUTER_EYES_AND_NOSE)
 
 
-metadata = load_metadata('images')
+metadata = load_metadata(images_path)
 
 # Initialize the OpenFace face alignment utility
 alignment = AlignDlib('models/landmarks.dat')
@@ -147,8 +151,8 @@ svc.fit(X_train, y_train)
 from sklearn.externals import joblib
 
 
-joblib.dump(svc, 'models/svc.pkl')
-joblib.dump(knn, 'models/knn.pkl')
+# joblib.dump(svc, 'models/svc.pkl')
+joblib.dump(knn,knn_model_path)
 
 print(svc.predict(X_test))
 print("----")
